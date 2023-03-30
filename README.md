@@ -1,1 +1,1 @@
-<b>Simple calculator Made With React Hooks</b> 
+<b><i>Simple calculator Made With React Hooks</i></b> 
