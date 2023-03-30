@@ -1,50 +1,94 @@
-// import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './Pages/home'
-import ErrorPage from './Pages/errorPage'
-import SignUp from './Pages/signup';
-import Login from './Pages/login';
-import Book from './Pages/bookPage'
-
-
+import React, { useState, useEffect, useRef } from "react";
+import "./App.css";
 
 function App() {
+  const [result, setResult] = useState("");
+  const inputRef = useRef(null);
+
+  useEffect(() => inputRef.current.focus());  //current.focus() means that the focus will be on the input field and useeffect is used to make sure that the focus is on the input field when the page is loaded
+
+  function handleClick(e) {
+    setResult(result.concat(e.target.name));
+  }
+
+  function backspace() {
+    setResult(result.slice(0, -1));  
+  }
+
+  function clear() {
+    setResult("");
+  }
+
+  function calculate() {
+    try {
+      setResult(eval(result).toString()); //we are using .toString() to convert the result into a string so that we can use the concat function beca
+    } catch (error) {
+      setResult("Error");
+    }
+  }
+
   return (
+    <div className="calc-app">
+      <from>
+        <input type="text" value={result} ref={inputRef} />  
+      </from>
 
-    <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-
-      <BrowserRouter>
-        <div className='logo'><h2>Book Management</h2></div>
-        <div className='route'>
-          <Routes>
-            <Route path='/' element={<Home />} />
-
-            <Route path='signup' element={<SignUp />} />
-
-            <Route path='login' element={<Login />} />
-
-            <Route path='getBook' element={<Book />} />
-
-            <Route path='*' element={<ErrorPage />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
-
+      <div className="keypad">
+        <button id="clear" onClick={clear}>
+          Clear
+        </button>
+        <button id="backspace" onClick={backspace}>
+          C
+        </button>
+        <button name="+" onClick={handleClick}>
+          +
+        </button>
+        <button name="7" onClick={handleClick}>
+          7
+        </button>
+        <button name="8" onClick={handleClick}>
+          8
+        </button>
+        <button name="9" onClick={handleClick}>
+          9
+        </button>
+        <button name="-" onClick={handleClick}>
+          -
+        </button>
+        <button name="4" onClick={handleClick}>
+          4
+        </button>
+        <button name="5" onClick={handleClick}>
+          5
+        </button>
+        <button name="6" onClick={handleClick}>
+          6
+        </button>
+        <button name="*" onClick={handleClick}>
+          &times;
+        </button>
+        <button name="1" onClick={handleClick}>
+          1
+        </button>
+        <button name="2" onClick={handleClick}>
+          2
+        </button>
+        <button name="3" onClick={handleClick}>
+          3
+        </button>
+        <button name="/" onClick={handleClick}>
+          /
+        </button>
+        <button name="0" onClick={handleClick}>
+          0
+        </button>
+        <button name="." onClick={handleClick}>
+          .
+        </button>
+        <button id="result" onClick={calculate}>
+          Result
+        </button>
+      </div>
     </div>
   );
 }
